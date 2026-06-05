@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlogGram</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!--  HEADER  -->
+  <header id="app-header">
+    <div class="header-inner">
+      <div class="logo" id="logo-btn">
+        <i class="fa-solid fa-pen-nib"></i>
+        <span>BlogGram</span>
+      </div>
+      <nav class="header-nav">
+        <button class="nav-btn" id="nav-home-btn">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </button>
+        <button class="nav-btn" id="nav-fav-btn">
+          <i class="fa-solid fa-bookmark"></i>
+          <span>Saved</span>
+          <span class="fav-badge" id="fav-count">0</span>
+        </button>
+        <button class="nav-btn nav-menu-btn" id="nav-menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!--  MAIN  -->
+  <main id="app-main">
+
+    <!-- HOME PAGE -->
+    <section id="page-home" class="page active">
+      <div class="page-header-row">
+        <h1 class="page-title">For You</h1>
+        <p class="page-sub">Discover stories that matter</p>
+      </div>
+      <div id="home-skeleton" class="posts-grid">
+        <!-- skeleton cards injected by JS on load -->
+      </div>
+      <div id="posts-grid" class="posts-grid hidden"></div>
+    </section>
+
+    <!-- FAVORITES PAGE -->
+    <section id="page-favorites" class="page">
+
+      <div class="page-header-row">
+        <button class="back-btn" id="fav-back-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div>
+          <h1 class="page-title">Saved Posts</h1>
+          <p class="page-sub">Your personal reading list</p>
+        </div>
+      </div>
+
+      <div id="fav-empty" class="empty-state hidden">
+        <i class="fa-regular fa-bookmark"></i>
+        <p>Nothing saved yet.<br />Tap the bookmark icon on any post.</p>
+      </div>
+      <div id="fav-grid" class="posts-grid"></div>
+    </section>
+
+    <!-- POST DETAILS PAGE -->
+    <section id="page-detail" class="page">
+      <div class="page-header-row">
+        <button class="back-btn" id="detail-back-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <h1 class="page-title">Post</h1>
+      </div>
+      <div id="detail-content"></div>
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- script -->
+  <script src="script.js"></script>
+</body>
+
+</html>

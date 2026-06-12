@@ -70,10 +70,10 @@ function isFav(postId) {
 function toggleFavorite(postId) {
   if (isFav(postId)) {
     favorites = favorites.filter(id => id !== postId);
-    showToast("Removed from saved", "fa-bookmark");
+    showToast("Removed from favorites", "fa-bookmark");
   } else {
     favorites.push(postId);
-    showToast("Added to saved", "fa-bookmark");
+    showToast("Added to favorites", "fa-bookmark");
   }
   saveFavorites();
   updateFavCount();
@@ -182,7 +182,7 @@ function buildPostCard(post, isFavPage) {
 
   const btnLabel = isFavPage
     ? `<i class="fa-solid fa-bookmark-slash"></i> Remove`
-    : `<i class="${saved ? "fa-solid" : "fa-regular"} fa-bookmark"></i> ${saved ? "Saved" : "Save"}`;
+    : `<i class="${saved ? "fa-solid" : "fa-regular"} fa-bookmark"></i> ${saved ? "Favorites" : "Add to favorites"}`;
 
   return `
     <article class="post-card" data-id="${post.id}">
@@ -204,10 +204,10 @@ function buildPostCard(post, isFavPage) {
           </span>
         </div>
     ${isFavPage
-      ? `<button class='btn-fav active btn-remove-fav' data-id='${post.id}' title='Remove from saved'>
+      ? `<button class='btn-fav active btn-remove-fav' data-id='${post.id}' title='Remove from favorites'>
        <i class='fa-solid fa-bookmark-slash'></i>
      </button>`
-      : `<button class='btn-fav ${saved ? "active" : ""}' data-id='${post.id}' title='${saved ? "Remove from saved" : "Save post"}'>
+      : `<button class='btn-fav ${saved ? "active" : ""}' data-id='${post.id}' title='${saved ? "Remove from favorites" : "Add to favorites"}'>
        <i class='${saved ? "fa-solid" : "fa-regular"} fa-bookmark'></i>
      </button>`
     }
@@ -217,10 +217,9 @@ function buildPostCard(post, isFavPage) {
 }
 
 function attachCardEvents(container, isFavPage) {
-  // Click on card → detail (not on buttons)
   container.querySelectorAll(".post-card").forEach(card => {
     card.addEventListener("click", e => {
-      if (e.target.closest(".btn-fav")) return; // handled separately
+      if (e.target.closest(".btn-fav")) return;
       const id = parseInt(card.dataset.id, 10);
       const post = allPosts.find(p => p.id === id);
       if (post) openDetail(post);
@@ -235,7 +234,7 @@ function attachCardEvents(container, isFavPage) {
       toggleFavorite(id);
 
       if (isFavPage) {
-        // Re-render favorites page after removal
+        
         renderFavoritesPage();
       }
     });
@@ -264,14 +263,16 @@ async function openDetail(post) {
   renderDetailPage(post);
   showPage("detail");
 
-  // Optionally fetch fresh full data (dummyjson supports /posts/:id)
+ 
   try {
     const res = await fetch(`https://dummyjson.com/posts/${post.id}`);
     if (!res.ok) return;
     const fresh = await res.json();
     currentPost = fresh;
     renderDetailPage(fresh);
-  } catch { /* keep cached */ }
+  } catch { 
+    console.warn("Failed to fetch fresh post details, showing cached data.");
+   }
 }
 
 function renderDetailPage(post) {
